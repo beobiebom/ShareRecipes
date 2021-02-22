@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "413402897117",
+    "project_id": "sharerecipes-5fe9d",
+    "storage_bucket": "sharerecipes-5fe9d.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:413402897117:android:f17b353e99be01a85ed934",
+        "android_client_info": {
+          "package_name": "com.share_recipes"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "413402897117-unq1g4a4nr5nlichuorffu412rjjh0bn.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDLOE7GvlNDHC2s7XESNIovxGjqrxTEhMg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "413402897117-unq1g4a4nr5nlichuorffu412rjjh0bn.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
