@@ -17,7 +17,10 @@ import {
   Directions,
   State,
 } from "react-native-gesture-handler";
-
+import {
+  fetchRecipes
+} from "../../utils/index"
+import Card from "../../components/Card/Card";
 const {width, height} = Dimensions.get ('window');
 
 const guidelineBaseWidth = 350;
@@ -27,53 +30,9 @@ const verticalScale = size => height / guidelineBaseHeight * size;
 const moderateScale = (size, factor = 0.5) =>
   size + (scale (size) - size) * factor;
 
-const DATA = [
-  {
-    title: 'Afro vibes',
-    location: 'Mumbai, India',
-    date: 'Nov 17th, 2020',
-    poster: 'https://www.creative-flyers.com/wp-content/uploads/2020/07/Afro-vibes-flyer-template.jpg',
-  },
-  {
-    title: 'Jungle Party',
-    location: 'Unknown',
-    date: 'Sept 3rd, 2020',
-    poster: 'https://www.creative-flyers.com/wp-content/uploads/2019/11/Jungle-Party-Flyer-Template-1.jpg',
-  },
-  {
-    title: '4th Of July',
-    location: 'New York, USA',
-    date: 'Oct 11th, 2020',
-    poster: 'https://www.creative-flyers.com/wp-content/uploads/2020/06/4th-Of-July-Invitation.jpg',
-  },
-  {
-    title: 'Summer festival',
-    location: 'Bucharest, Romania',
-    date: 'Aug 17th, 2020',
-    poster: 'https://www.creative-flyers.com/wp-content/uploads/2020/07/Summer-Music-Festival-Poster.jpg',
-  },
-  {
-    title: 'BBQ with friends',
-    location: 'Prague, Czech Republic',
-    date: 'Sept 11th, 2020',
-    poster: 'https://www.creative-flyers.com/wp-content/uploads/2020/06/BBQ-Flyer-Psd-Template.jpg',
-  },
-  {
-    title: 'Festival music',
-    location: 'Berlin, Germany',
-    date: 'Apr 21th, 2021',
-    poster: 'https://www.creative-flyers.com/wp-content/uploads/2020/06/Festival-Music-PSD-Template.jpg',
-  },
-  {
-    title: 'Beach House',
-    location: 'Liboa, Portugal',
-    date: 'Aug 12th, 2020',
-    poster: 'https://www.creative-flyers.com/wp-content/uploads/2020/06/Summer-Beach-House-Flyer.jpg',
-  },
-];
 
 const Home = () => {
-  const [data, setData] = React.useState (DATA);
+  const [data, setData] = React.useState ();
   const scrollXIndex = React.useRef (new Animated.Value (0)).current;
   const scrollXAnimated = React.useRef (new Animated.Value (0)).current;
   const [index, setIndex] = React.useState(0);
@@ -83,192 +42,163 @@ const Home = () => {
     //console.log("I was called")
   });
 
+  React.useEffect(()=>{
+    fetchRecipes().then((value)=>{setData(value)})
+  },[])
+
   React.useEffect (() => {
     Animated.spring (scrollXAnimated, {
       toValue: scrollXIndex,
       useNativeDriver: true,
+      speed:1.5,
     }).start ();
-    console.log (scrollXAnimated);
-    console.log (scrollXIndex);
   });
 
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.header}>
-        <Feather name="menu" size={25} />
-        <View
-          style={{
-            width: '90%',
-            height: verticalScale (40),
-            borderColor: '#000',
-            borderWidth: 1.5,
-            borderRadius: 50,
-            paddingLeft: 15,
-            flexDirection: 'row',
-            alignItems: 'center',
-          }}
-        >
-          <Input
-            placeholder="Search for recipes"
-            color="black"
-            style={{marginTop: 0.003, width: '88%'}}
-          />
-          <AntDesign name="search1" size={25} />
-        </View>
+        <AntDesign name="search1" size={25}  />
+        <Feather name="menu" size={25} style={{marginLeft:30}} />
       </View>
       <View style={styles.body}>
-        <Text
-          style={{
-            fontFamily: 'Montserrat-ExtraBold',
-            fontSize: 30,
-            letterSpacing: 2,
-          }}
-        >
-          RECIPES
-        </Text>
-        <View style={{width: '100%', height: '100%', alignItems: 'flex-end'}}>
+        <Text style={styles.title} >RECIPES</Text>
+        <View style={{width: '100%', height: '92%'}}>
           <View
             style={{
               flexDirection: 'row',
-              width: verticalScale (460),
+              width: verticalScale (430),
               justifyContent: 'space-between',
-              top: '41%',
+              top: '43%',
               transform: [
-                {translateX: -(width / 2 - scale (50))},
+                {translateX: -(width / 2) +scale(15)},
                 {rotate: '-90deg'},
               ],
-              position: 'absolute',
+              position: 'absolute', 
             }}
           >
             <Button
-              width={verticalScale (150)}
+              width={verticalScale (130)}
               height={scale (35)}
+              borderRadius={15}
               color="yellow"
-              textStyle={{fontFamily: 'Montserrat-Bold', fontSize: 20}}
-              style={{alignItems: 'center'}}
+              textStyle={{fontFamily: 'Montserrat-Bold', fontSize: 20,color:"white"}}
+              style={{flexDirection:"row", alignItems: 'center',justifyContent:"center"}}
             >
               Lunch
             </Button>
             <Button
-              width={verticalScale (150)}
+              width={verticalScale (130)}
               height={scale (35)}
+              borderRadius={15}
               color="pink"
-              textStyle={{fontFamily: 'Montserrat-Bold', fontSize: 20}}
-              style={{alignItems: 'center'}}
+              textStyle={{fontFamily: 'Montserrat-Bold', fontSize: 20, color:"white"}}
+              style={{flexDirection:"row", alignItems: 'center',justifyContent:"center"}}
             >
               Dinner
             </Button>
             <Button
-              width={verticalScale (150)}
+              width={verticalScale (130)}
               height={scale (35)}
+              borderRadius={15}
               color="red"
-              textStyle={{fontFamily: 'Montserrat-Bold', fontSize: 20}}
-              style={{alignItems: 'center'}}
+              textStyle={{fontFamily: 'Montserrat-Bold', fontSize: 20,color:"white"}}
+              style={{flexDirection:"row", alignItems: 'center',justifyContent:"center"}}
             >
               Breakfast
             </Button>
           </View>
           <FlingGestureHandler
-      key='left'
-      direction={Directions.LEFT}
-      onHandlerStateChange={(ev) => {
-        if (ev.nativeEvent.state === State.END) {
-          if (index === data.length - 1) {
-            return;
-          }
-          setActiveIndex(index + 1);
-        }
-      }}
-    >
-      <FlingGestureHandler
-        key='right'
-        direction={Directions.RIGHT}
-        onHandlerStateChange={(ev) => {
-          if (ev.nativeEvent.state === State.END) {
-            if (index === 0) {
-              return;
-            }
-            setActiveIndex(index - 1);
-          }
-        }}
-      >
-          <View
-            style={{
-              width: scale (290),
-              height: verticalScale (455),
-              marginTop: verticalScale (5),
+            key="left"
+            direction={Directions.LEFT}
+            onHandlerStateChange={ev => {
+              if (ev.nativeEvent.state === State.END) {
+                if (index === data.length - 1) {
+                  return;
+                }
+                setActiveIndex (index + 1);
+              }
             }}
           >
-            <FlatList
-              data={data}
-              keyExtractor={(_, index) => String (index)}
-              horizontal
-              inverted
-              contentContainerStyle={{
-                flex: 1,
-                justifyContent: 'center',
+            <FlingGestureHandler
+              key="right"
+              direction={Directions.RIGHT}
+              onHandlerStateChange={ev => {
+                if (ev.nativeEvent.state === State.END) {
+                  if (index === 0) {
+                    return;
+                  }
+                  setActiveIndex (index - 1);
+                }
               }}
-              scrollEnabled={false}
-              removeClippedSubviews={false}
-              CellRendererComponent={({
-                item,
-                index,
-                children,
-                style,
-                ...props
-              }) => {
-                const newStyle = [style, {zIndex: data.length - index}];
-                return (
-                  <View style={newStyle} index={index} {...props}>
-                    {children}
-                  </View>
-                );
-              }}
-              renderItem={({item, index}) => {
-                // console.log(scrollXIndex)
-                const inputRange = [index - 1, index, index + 1];
-                const translateX = scrollXAnimated.interpolate ({
-                  inputRange,
-                  outputRange: [50, 0, -100],
-                });
-                const scaleImg = scrollXAnimated.interpolate ({
-                  inputRange,
-                  outputRange: [0.8, 1, 1.3],
-                });
-                const opacity = scrollXAnimated.interpolate ({
-                  inputRange,
-                  outputRange: [1 - 1 / 3, 1, 0],
-                });
-
-                return (
-                  <Animated.View
-                    style={{
-                      position: 'absolute',
-                      left: -scale (200) / 2,
-                      opacity,
-                      transform: [
-                        {
-                          translateX,
-                        },
-                        {scale: scaleImg},
-                      ],
-                    }}
-                  >
-                    <Image
-                      source={{uri: item.poster}}
-                      style={{
-                        width: scale (240),
-                        height: verticalScale (455),
-                      }}
-                    />
-                  </Animated.View>
-                );
-              }}
-            />
-          </View>
-           </FlingGestureHandler>
-    </FlingGestureHandler>
+            >
+              <View
+                style={{
+                  width: scale (290),
+                  height: verticalScale (455),
+                  marginLeft: scale (50),
+                  marginTop:verticalScale(20),
+                }}
+              >
+                <FlatList
+                  data={data}
+                  keyExtractor={(_, index) => String (index)}
+                  horizontal
+                  inverted
+                  contentContainerStyle={{
+                    flex: 1,
+                    justifyContent: 'center',
+                  }}
+                  scrollEnabled={false}
+                  removeClippedSubviews={false}
+                  CellRendererComponent={({item, index, children, style, ...props}) => {
+                    const newStyle = [style, {zIndex: data.length - index}];
+                    return (
+                      <View style={newStyle} index={index} {...props}>
+                        {children}
+                      </View>
+                    );
+                  }}
+                  renderItem={({item, index}) => {
+                    const inputRange = [index - 1, index, index + 1];
+                    console.log(index)
+                    const translateX = scrollXAnimated.interpolate ({
+                      inputRange,
+                      outputRange: [50, 0, -100],
+                    });
+                    const scaleImg = scrollXAnimated.interpolate ({
+                      inputRange,
+                      outputRange: [0.8, 1, 1.3],
+                    });
+                    const opacity = scrollXAnimated.interpolate ({
+                      inputRange,
+                      outputRange: [1 - 1 / 3, 1, 0],
+                    });
+                    return (
+                      <Animated.View
+                        style={{
+                          position: 'absolute',
+                          left: -scale (200) / 2,
+                          opacity,
+                          transform: [
+                            {
+                              translateX,
+                            },
+                            {scale: scaleImg},
+                          ],
+                        }}
+                      >
+                        <Card name={item.name} uri={item.link} description={item.description} />
+                      </Animated.View>
+                    );
+                  }}
+                />
+              </View>
+            </FlingGestureHandler>
+          </FlingGestureHandler>
         </View>
+      </View>
+      <View>
+
       </View>
     </SafeAreaView>
   );
@@ -284,13 +214,127 @@ const styles = StyleSheet.create ({
   header: {
     height: '8%',
     flexDirection: 'row',
-    justifyContent: 'space-between',
     alignItems: 'center',
-    // backgroundColor:"yellow"
+    justifyContent:"flex-end",
+    paddingRight:10
   },
   body: {
-    height: '80%',
-    //  backgroundColor:"green",
+    height: '78%',
+    width:"100%",
   },
+  searchBox:{
+    width: '90%',
+    height: "80%",
+    borderColor: '#000',
+    borderWidth: 1.5,
+    borderRadius: 50,
+    paddingLeft: 15,
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  title:{
+    fontFamily: 'Montserrat-ExtraBold',
+    fontSize: 30,
+    height:"8%",
+    width:"100%",
+    letterSpacing: 2,
+  }
 });
 export default Home;
+
+
+// <FlingGestureHandler
+//   key="left"
+//   direction={Directions.LEFT}
+//   onHandlerStateChange={ev => {
+//     if (ev.nativeEvent.state === State.END) {
+//       if (index === data.length - 1) {
+//         return;
+//       }
+//       setActiveIndex (index + 1);
+//     }
+//   }}
+// >
+//   <FlingGestureHandler
+//     key="right"
+//     direction={Directions.RIGHT}
+//     onHandlerStateChange={ev => {
+//       if (ev.nativeEvent.state === State.END) {
+//         if (index === 0) {
+//           return;
+//         }
+//         setActiveIndex (index - 1);
+//       }
+//     }}
+//   >
+//     <View
+//       style={{
+//         width: scale (290),
+//         height: verticalScale (455),
+//         marginLeft: scale (50),
+//       }}
+//     >
+//       <FlatList
+//         data={data}
+//         keyExtractor={(_, index) => String (index)}
+//         horizontal
+//         inverted
+//         contentContainerStyle={{
+//           flex: 1,
+//           justifyContent: 'center',
+//         }}
+//         scrollEnabled={false}
+//         removeClippedSubviews={false}
+//         CellRendererComponent={({item, index, children, style, ...props}) => {
+//           const newStyle = [style, {zIndex: data.length - index}];
+//           return (
+//             <View style={newStyle} index={index} {...props}>
+//               {children}
+//             </View>
+//           );
+//         }}
+//         renderItem={({item, index}) => {
+//           const inputRange = [index - 1, index, index + 1];
+
+//           const translateX = scrollXAnimated.interpolate ({
+//             inputRange,
+//             outputRange: [50, 0, -100],
+//           });
+//           const scaleImg = scrollXAnimated.interpolate ({
+//             inputRange,
+//             outputRange: [0.8, 1, 1.3],
+//           });
+//           const opacity = scrollXAnimated.interpolate ({
+//             inputRange,
+//             outputRange: [1 - 1 / 3, 1, 0],
+//           });
+
+//           return (
+//             <Animated.View
+//               style={{
+//                 position: 'absolute',
+//                 left: -scale (200) / 2,
+//                 opacity,
+//                 transform: [
+//                   {
+//                     translateX,
+//                   },
+//                   {scale: scaleImg},
+//                 ],
+//               }}
+//             >
+//               <Card />
+//               <Image
+//                 source={{uri: item.poster}}
+//                 style={{
+//                   width: scale (240),
+//                   height: verticalScale (455),
+//                 }}
+//               />
+//             </Animated.View>
+//           );
+//         }}
+//       />
+//     </View>
+//   </FlingGestureHandler>
+// </FlingGestureHandler>;
