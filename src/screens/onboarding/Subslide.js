@@ -32,7 +32,7 @@ const styles=StyleSheet.create({
 })
 
 const Subslide=({title,description,index,onPress,scroll})=>{
-  const {getStarted}=React.useContext(AuthContext);
+  const {authContext}=React.useContext(AuthContext);
     let content=(
         <View style={styles.rowButton}>
                 <Button color="#FFC530" borderRadius={10} width={52} height={44} textStyle={{textAlign:"center",color:"white",fontSize:15,fontFamily:"Montserrat-Bold"}} style={{justifyContent:"center"}} onPress={()=>{scroll.current.scrollTo({ x: width * (index-1) , animated: true })}} >Prev</Button>
@@ -50,7 +50,7 @@ const Subslide=({title,description,index,onPress,scroll})=>{
         content=(
             <View style={styles.rowButton}>
                     <Button color="#FFC530" borderRadius={10} width={52} height={44} textStyle={{textAlign:"center",color:"white",fontSize:15,fontFamily:"Montserrat-Bold"}} style={{justifyContent:"center"}} onPress={()=>{scroll.current.scrollTo({ x: width * (index-1) , animated: true })}} >Prev</Button>
-                    <Button color="#FFC530" borderRadius={10} width={100} height={44}  textStyle={{textAlign:"center",color:"white",fontSize:15,fontFamily:"Montserrat-Bold"}} style={{justifyContent:"center"}}  onPress={()=>{getStarted()}} >Get started</Button>
+                    <Button color="#FFC530" borderRadius={10} width={100} height={44}  textStyle={{textAlign:"center",color:"white",fontSize:15,fontFamily:"Montserrat-Bold"}} style={{justifyContent:"center"}}  onPress={()=>{authContext.getStarted()}} >Get started</Button>
             </View> 
         )
     }

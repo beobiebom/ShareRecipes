@@ -33,19 +33,16 @@ export const useAuth=()=>{
             isLoading:true,
             isSignOut:false,
             userUID:null,
+            data_Recipes:[],
         }
     );
 
-    
-
-    const authContext=React.useMemo(
-    ()=>({
+    const authContext=React.useMemo(()=>({
         getStarted:()=>dispatch({type:"GET_STARTED"}),
         signIn:(userUID)=>dispatch({type:"SIGN_IN",uid:userUID}),
         signOut:()=>dispatch({type:"SIGN_OUT"}),
-        signUp:()=>dispatch({type:"SIGN_IN"})
-    }),
-    []
-    );
+        signUp:()=>dispatch({type:"SIGN_IN"}),
+    }),[]);
+
     return {authContext,state}
 }

@@ -11,21 +11,21 @@ const App=()=>{
     const {authContext,state}=useAuth()
     
     React.useEffect(()=>{
-            try{
-                Storage.loadToken("sharerecipes").then((uid)=>{
-                    state.isLoading=false
-                }).catch((e) => console.log(e))
-            }catch(e){
-                console.log(e)
-            }
+        try{
+            Storage.loadToken("sharerecipes").then((uid)=>{
+                state.isLoading=false
+            }).catch((e) => console.log(e))
+        }catch(e){
+            console.log(e)
+        }
     },[]);
 
     return(
-        <AuthContext.Provider value={authContext}>
+        <AuthContext.Provider value={{authContext,initialState:state}} > 
             <NavigationContainer>
                 <Stack.Navigator>
-                    <Stack.Screen name="Home" component={Home} options={{headerShown:null,}}  />
-                    {/* {
+                    {/* <Stack.Screen name="Home" component={Home} options={{headerShown:null,}}  /> */}
+                    {
                         state.isLoading?(    
                             <Stack.Screen name="Onboarding" component={Onboarding} options={{headerShown:null,}} />
                         ):state.userUID==null?
@@ -35,7 +35,7 @@ const App=()=>{
                             <Stack.Screen name="Home" component={Home} options={{headerShown:null,}} />
                         )
 
-                    } */}
+                    }
                 </Stack.Navigator>
             </NavigationContainer>
         </AuthContext.Provider>

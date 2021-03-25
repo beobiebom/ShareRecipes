@@ -15,7 +15,7 @@ const moderateScale = (size, factor = 0.5) =>
 const styles=StyleSheet.create({
     container:{
         width:scale(240),
-        height:400,
+        height:verticalScale(400),
         flexDirection:"column",
         justifyContent:"flex-end",
     },
@@ -34,14 +34,15 @@ const styles=StyleSheet.create({
     },
     footer:{
         width:"100%",
-        height:"35%",
+        height:"32%",
         backgroundColor:"#ff785b",
         // borderTopLeftRadius:15,
         // borderTopRightRadius:15,
         borderRadius:30,
+        justifyContent:"center",
         borderBottomRightRadius:15,
         borderBottomLeftRadius:15,
-        paddingTop:10
+        paddingTop:verticalScale(10)
     }
 });
 
@@ -50,7 +51,6 @@ const Card=(props)=>{
         <ImageBackground style={styles.container} imageStyle={{borderRadius:15}} source={{uri:props.uri}}>
             <View style={styles.footer}>
                 <Text style={styles.name}>{props.name}</Text>
-                <Text style={styles.description}>{props.description}</Text>
             </View>
         </ImageBackground>
     )

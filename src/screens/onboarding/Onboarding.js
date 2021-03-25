@@ -77,8 +77,8 @@ const Onboarding=({navigation})=>{
             {slides.map(({image},index)=>{
                 return(
                     <View style={styles.underlay}   key={index}>
-                    <Image source={image.src} 
-                    style={{width:width,height:image.height}} />
+                        <Image source={image.src} 
+                        style={{width:width,height:image.height}} />
                     </View>
                 )
             })}

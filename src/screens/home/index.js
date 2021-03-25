@@ -21,6 +21,8 @@ import {
   fetchRecipes
 } from "../../utils/index"
 import Card from "../../components/Card/Card";
+import {AuthContext} from "../../authContext/AuthContext"
+
 const {width, height} = Dimensions.get ('window');
 
 const guidelineBaseWidth = 350;
@@ -41,16 +43,19 @@ const Home = () => {
     setIndex (activeIndex);
     //console.log("I was called")
   });
-
+  const {initialState}=React.useContext(AuthContext);
   React.useEffect(()=>{
-    fetchRecipes().then((value)=>{setData(value)})
+    fetchRecipes().then((value)=>{
+      setData(value)
+      initialState.data_Recipes=value
+    })
   },[])
 
   React.useEffect (() => {
     Animated.spring (scrollXAnimated, {
       toValue: scrollXIndex,
       useNativeDriver: true,
-      speed:1.5,
+      speed:2,
     }).start ();
   });
 
@@ -68,9 +73,9 @@ const Home = () => {
               flexDirection: 'row',
               width: verticalScale (430),
               justifyContent: 'space-between',
-              top: '43%',
+              top: '44%',
               transform: [
-                {translateX: -(width / 2) +scale(15)},
+                {translateX: -(width / 2)},
                 {rotate: '-90deg'},
               ],
               position: 'absolute', 
@@ -80,21 +85,21 @@ const Home = () => {
               width={verticalScale (130)}
               height={scale (35)}
               borderRadius={15}
-              color="yellow"
-              textStyle={{fontFamily: 'Montserrat-Bold', fontSize: 20,color:"white"}}
-              style={{flexDirection:"row", alignItems: 'center',justifyContent:"center"}}
-            >
-              Lunch
-            </Button>
-            <Button
-              width={verticalScale (130)}
-              height={scale (35)}
-              borderRadius={15}
               color="pink"
               textStyle={{fontFamily: 'Montserrat-Bold', fontSize: 20, color:"white"}}
               style={{flexDirection:"row", alignItems: 'center',justifyContent:"center"}}
             >
               Dinner
+            </Button>
+            <Button
+              width={verticalScale (130)}
+              height={scale (35)}
+              borderRadius={15}
+              color="yellow"
+              textStyle={{fontFamily: 'Montserrat-Bold', fontSize: 20,color:"white"}}
+              style={{flexDirection:"row", alignItems: 'center',justifyContent:"center"}}
+            >
+              Lunch
             </Button>
             <Button
               width={verticalScale (130)}
@@ -160,7 +165,6 @@ const Home = () => {
                   }}
                   renderItem={({item, index}) => {
                     const inputRange = [index - 1, index, index + 1];
-                    console.log(index)
                     const translateX = scrollXAnimated.interpolate ({
                       inputRange,
                       outputRange: [50, 0, -100],
@@ -209,14 +213,14 @@ const styles = StyleSheet.create ({
     flex: 1,
     flexDirection: 'column',
     backgroundColor: 'white',
-    padding: 5,
+    padding: moderateScale(5),
   },
   header: {
     height: '8%',
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent:"flex-end",
-    paddingRight:10
+    paddingRight:scale(10)
   },
   body: {
     height: '78%',
@@ -234,7 +238,7 @@ const styles = StyleSheet.create ({
   },
   title:{
     fontFamily: 'Montserrat-ExtraBold',
-    fontSize: 30,
+    fontSize: moderateScale(30),
     height:"8%",
     width:"100%",
     letterSpacing: 2,

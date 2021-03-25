@@ -1,5 +1,5 @@
 import React from 'react'
-import { Dimensions, Image, SafeAreaView, StyleSheet, Text,View } from 'react-native'
+import { Dimensions, Image, KeyboardAvoidingView, SafeAreaView, StyleSheet, Text,View } from 'react-native'
 import {Button, Input} from '../../components/index'
 import Icon from 'react-native-vector-icons/AntDesign'; 
 import FontAweSome from 'react-native-vector-icons/FontAwesome'
@@ -7,6 +7,7 @@ import {Formik} from 'formik'
 import {SignInRequest,Storage} from '../../utils/index'
 import {AuthContext} from '../../authContext/AuthContext'
 import * as yup from 'yup'
+import { ScrollView } from 'react-native-gesture-handler';
 
 const {width,height}=Dimensions.get("window")
 
@@ -19,7 +20,7 @@ const verticalScale = size => (height / guidelineBaseHeight) * size;
 const moderateScale = (size, factor = 0.5) => size + (scale(size) - size) * factor;
 
 const SignIn=({navigation})=>{
-    const {signIn}=React.useContext(AuthContext);
+    const {authContext}=React.useContext(AuthContext);
     const [secureState,setSecureSate]=React.useState(true);
     const [errorValue,setErrorValue]=React.useState({
         email:"",
@@ -47,7 +48,7 @@ const SignIn=({navigation})=>{
                 })
                 await SignInRequest(values).then((res)=>{
                     Storage.saveToken(res.user.uid)
-                    signIn(res.user.uid)
+                    authContext.signIn(res.user.uid)
                 }).catch((err)=>{
                     setErrorValue({
                         email:"",
@@ -91,14 +92,14 @@ const SignIn=({navigation})=>{
                             <View style={styles.forgotContainer}>
                                 <Text style={styles.forgotText}>Forgot password?</Text>
                                 <Button color="white" width={scale(100)} height={verticalScale(40)} 
-                                style={{justifyContent:"center",alignItems:"center"}}
-                                icon={true}
-                                onPress={()=>onSignIn(props.values,props.errors)}
-                                borderRadius={10}>
-                                <View style={{flexDirection:"row",alignItems:"center"}} >
-                                    <Text style={{fontFamily:"Montserrat-Bold",fontSize:moderateScale(16)}}>Sign In</Text>
-                                    <Icon style={{marginLeft:8}} name="arrowright" size={moderateScale(25)}/>
-                                </View>
+                                    style={{justifyContent:"center",alignItems:"center"}}
+                                    icon={true}
+                                    onPress={()=>onSignIn(props.values,props.errors)}
+                                    borderRadius={10}>
+                                    <View style={{flexDirection:"row",alignItems:"center"}} >
+                                        <Text style={{fontFamily:"Montserrat-Bold",fontSize:moderateScale(16)}}>Sign In</Text>
+                                        <Icon style={{marginLeft:8}} name="arrowright" size={moderateScale(25)}/>
+                                    </View>
                                 </Button>
                             </View>
                         </View>
@@ -148,18 +149,20 @@ const styles=StyleSheet.create({
         backgroundColor:"#FFFFFF"
     },
     header:{
-        flex:1,
+        width:"100%",
+        height:"25%"
     },
     body:{
-        flex:2.2,
+        height:"50%",
         alignItems:"center",
         justifyContent:"center",
         width:"100%",
     },
     footer:{
-        flex:1,
+        height:"25%",
         alignItems:"center",
         width:"100%",
+        paddingTop:verticalScale(10),
     },
     boxSignIn:{
         width:scale(320),
@@ -176,13 +179,13 @@ const styles=StyleSheet.create({
     },
     input:{
         width:scale(280),
-        padding:10,
+        padding:moderateScale(10),
     },
     errorText:{
         color:"red",
         fontFamily:"Montserrat-Regular",
         fontSize:moderateScale(12),
-        width:310,
+        width:scale(280),
         marginTop:verticalScale(5),
         textAlign:"left"
     },
@@ -196,11 +199,11 @@ const styles=StyleSheet.create({
         width:scale(280),
         flexDirection:"row",
         justifyContent:"space-between",
-        marginTop:verticalScale(32),
+        marginTop:verticalScale(18),
         alignItems:"flex-end"
     },
     textFooter:{
-        fontSize:moderateScale(16),
+        fontSize:moderateScale(14),
         fontFamily:"Montserrat-Regular",
     },
     FBGGContainer:{
