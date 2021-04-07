@@ -1,7 +1,7 @@
-import React from "react"
-import { StyleSheet,View } from "react-native"
+import React from "react";
+import { View,StyleSheet } from "react-native";
 
-const Add=()=>{
+const Chat=()=>{
     return(
         <View style={styles.container}>
 
@@ -13,4 +13,6 @@ const styles=StyleSheet.create({
     container:{
         flex:1,
     }
-})
+});
+
+export default Chat;

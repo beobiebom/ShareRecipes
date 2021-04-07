@@ -46,8 +46,8 @@ const Home = () => {
   const {initialState}=React.useContext(AuthContext);
   React.useEffect(()=>{
     fetchRecipes().then((value)=>{
-      setData(value)
-      initialState.data_Recipes=value
+      setData(value);
+      initialState.data_Recipes=value;
     })
   },[])
 
@@ -67,13 +67,12 @@ const Home = () => {
       </View>
       <View style={styles.body}>
         <Text style={styles.title} >RECIPES</Text>
-        <View style={{width: '100%', height: '92%'}}>
+        <View style={{width: '100%', height: '92%',position:"relative"}}>
           <View
             style={{
               flexDirection: 'row',
               width: verticalScale (430),
-              justifyContent: 'space-between',
-              top: '44%',
+              top: '37%',
               transform: [
                 {translateX: -(width / 2)},
                 {rotate: '-90deg'},
@@ -82,32 +81,32 @@ const Home = () => {
             }}
           >
             <Button
-              width={verticalScale (130)}
+              width={verticalScale (120)}
               height={scale (35)}
               borderRadius={15}
               color="pink"
-              textStyle={{fontFamily: 'Montserrat-Bold', fontSize: 20, color:"white"}}
+              textStyle={{fontFamily: 'Montserrat-Bold', fontSize: moderateScale(18), color:"white"}}
               style={{flexDirection:"row", alignItems: 'center',justifyContent:"center"}}
             >
               Dinner
             </Button>
             <Button
-              width={verticalScale (130)}
+              width={verticalScale (120)}
               height={scale (35)}
               borderRadius={15}
               color="yellow"
-              textStyle={{fontFamily: 'Montserrat-Bold', fontSize: 20,color:"white"}}
-              style={{flexDirection:"row", alignItems: 'center',justifyContent:"center"}}
+              textStyle={{fontFamily: 'Montserrat-Bold', fontSize: moderateScale(18),color:"white"}}
+              style={{flexDirection:"row", alignItems: 'center',justifyContent:"center",marginLeft:10}}
             >
               Lunch
             </Button>
             <Button
-              width={verticalScale (130)}
+              width={verticalScale (120)}
               height={scale (35)}
               borderRadius={15}
               color="red"
-              textStyle={{fontFamily: 'Montserrat-Bold', fontSize: 20,color:"white"}}
-              style={{flexDirection:"row", alignItems: 'center',justifyContent:"center"}}
+              textStyle={{fontFamily: 'Montserrat-Bold', fontSize: moderateScale(18),color:"white"}}
+              style={{flexDirection:"row", alignItems: 'center',justifyContent:"center",marginLeft:10}}
             >
               Breakfast
             </Button>
@@ -141,7 +140,7 @@ const Home = () => {
                   width: scale (290),
                   height: verticalScale (455),
                   marginLeft: scale (50),
-                  marginTop:verticalScale(20),
+                  // marginTop:verticalScale(5),
                 }}
               >
                 <FlatList
@@ -220,7 +219,7 @@ const styles = StyleSheet.create ({
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent:"flex-end",
-    paddingRight:scale(10)
+    paddingRight:scale(10),
   },
   body: {
     height: '78%',
@@ -239,8 +238,6 @@ const styles = StyleSheet.create ({
   title:{
     fontFamily: 'Montserrat-ExtraBold',
     fontSize: moderateScale(30),
-    height:"8%",
-    width:"100%",
     letterSpacing: 2,
   }
 });

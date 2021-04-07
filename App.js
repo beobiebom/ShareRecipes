@@ -4,7 +4,7 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import {useAuth} from "./src/authContext/useAuth";
 import {Onboarding,Home} from "./src/screens/index"
-import {SignStack} from "./src/navigation/index"
+import {SignStack,HomeStack} from "./src/navigation/index"
 import {Storage} from "./src/utils/index"
 const App=()=>{
     const Stack=createStackNavigator()
@@ -32,7 +32,7 @@ const App=()=>{
                         (
                             <Stack.Screen name="SignStack" component={SignStack} options={{headerShown:null,}} />
                         ):(
-                            <Stack.Screen name="Home" component={Home} options={{headerShown:null,}} />
+                            <Stack.Screen name="Home" children={HomeStack} options={{headerShown:null,}} />
                         )
 
                     }
